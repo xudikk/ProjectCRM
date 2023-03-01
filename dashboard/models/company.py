@@ -1,5 +1,6 @@
 from django.db import models
 from geo.models import Region, District
+from user.models import User
 from . import PositionChoice, MemberChoice
 
 
@@ -44,8 +45,7 @@ class Member(models.Model):
     firstname = models.CharField(max_length=30, blank=False, null=False)
     lastname = models.CharField(max_length=30, blank=True, null=True)
     middlename = models.CharField(max_length=30, blank=True, null=True)
-    email = models.EmailField(max_length=100, unique=True, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True, unique=True)
     birthday = models.DateField(auto_now=False, blank=True, null=True)
     gender = models.BooleanField(default=True, null=False, )
     is_student = models.BooleanField(default=False, null=False, )
@@ -57,6 +57,8 @@ class Member(models.Model):
     region = models.ForeignKey(Region, related_name='member_region', null=True, blank=True, on_delete=models.SET_NULL)
     district = models.ForeignKey(District, related_name='member_district', null=True, blank=True,
                                  on_delete=models.SET_NULL)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+
 
     def __str__(self):
         return self.firstname

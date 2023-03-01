@@ -1,10 +1,13 @@
 import random
+import uuid
 
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from dashboard.models.user import User
+from base.helper import generate_key, code_hashing
+from dashboard.models.user import Otp
+from user.models import User
 
 rdbg = ['blue', 'azure', 'green', 'purple']
 
@@ -17,10 +20,10 @@ def sign_in(requests):
         "rdbg": rdbg[random.randint(0, len(rdbg) - 1)]
     }
     if requests.POST:
-        username = requests.POST.get('phone')
+        phone = requests.POST.get('phone')
         password = requests.POST.get('pass')
 
-        user = User.objects.filter(phone=username).first()
+        user = User.objects.filter(phone=phone).first()
         if not user:
             ctx["error"] = True
             return render(requests, 'auth/login.html', ctx)
@@ -29,13 +32,26 @@ def sign_in(requests):
             ctx["error"] = True
             return render(requests, 'auth/login.html', ctx)
 
-        if not user.is_superuser or not user.is_staff:
-            ctx["staff_error"] = True
-            return render(requests, 'auth/login.html', ctx)
+        # if not user.is_superuser or not user.is_staff:
+        #     ctx["staff_error"] = True
+        #     return render(requests, 'auth/login.html', ctx)
 
-        login(requests, user)
+        otp = random.randint(100000, 999999)
+        code = generate_key(50) + "$" + str(otp) + "$" + uuid.uuid4()
+        hashed = code_hashing(code)
+        requests.session['token'] = hashed
+        requests.session['otp'] = otp
 
-        return redirect('home')
+        root = Otp.objects.create(
+            key=code,
+            mobile=phone,
+            extra={},
+
+
+        )
+
+
+        return redirect('otp')
 
     return render(requests, 'auth/login.html', ctx)
 
