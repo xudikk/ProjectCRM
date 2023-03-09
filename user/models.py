@@ -6,7 +6,7 @@ from django.db import models
 
 class UserManager(BaseUserManager):
     def create_user(self, phone, password=None, is_staff=False,
-                    is_active=True, phone_number=None, **extra_fields):
+                    is_active=True, **extra_fields):
         'Creates a User with the given username, email and password'
 
         user = self.model(phone=phone, is_active=is_active,

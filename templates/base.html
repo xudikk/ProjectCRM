@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Custom CRM">
+    <meta name="author" content="xudikk">
 
     <title>{% block title %}{% endblock %}</title>
 
@@ -19,6 +19,21 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'regis/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+
+    <!--  external  -->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/datepicker/css/bootstrap-datepicker.min.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/select2/css/select2.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
 
 </head>
 
@@ -35,7 +50,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Bella Tme</div>
+                <div class="sidebar-brand-text mx-3">FinTech Hub </div>
             </a>
 
             <!-- Divider -->
@@ -45,7 +60,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Bosh Menu</span></a>
             </li>
 
             <!-- Divider -->
@@ -53,32 +68,35 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Asosiy bo'lim
             </div>
 
+            {% if not ekey %}
             <!-- Nav Item - Pages Collapse Menu -->
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Komponentalar</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Models:</h6>
+                        <h6 class="collapse-header">Yordamchi Menu</h6>
                         <a class="collapse-item" href="">Category</a>
                     </div>
                 </div>
             </li>
-
+            {% endif %}
 
 
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'sign-out' %}">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Logout</span></a>
+                     <a class="nav-link" href="" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
+                        <span>Logout</span>
+                    </a>
             </li>
 
             <!-- Divider -->
@@ -141,33 +159,34 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ request.user.username }}</span>
+                            <a class="nav-link dropdown-toggle" href="{% url 'student-profile' %}" id="userDropdown" role="button"
+                                aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ request.user.nickname }}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{% static 'regis/img/undraw_profile.svg' %}">
                             </a>
+
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-<!--                                <a class="dropdown-item" href="#">-->
-<!--                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>-->
-<!--                                    Profile-->
+<!--                            <div class="dropdown-menu dropdown-menu-right shadow animated&#45;&#45;grow-in"-->
+<!--                                aria-labelledby="userDropdown">-->
+<!--&lt;!&ndash;                                <a class="dropdown-item" href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    Profile&ndash;&gt;-->
+<!--&lt;!&ndash;                                </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <a class="dropdown-item" href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    Settings&ndash;&gt;-->
+<!--&lt;!&ndash;                                </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <a class="dropdown-item" href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    Activity Log&ndash;&gt;-->
+<!--&lt;!&ndash;                                </a>&ndash;&gt;-->
+<!--                                <div class="dropdown-divider"></div>-->
+<!--                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">-->
+<!--                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>-->
+<!--                                    Logout-->
 <!--                                </a>-->
-<!--                                <a class="dropdown-item" href="#">-->
-<!--                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>-->
-<!--                                    Settings-->
-<!--                                </a>-->
-<!--                                <a class="dropdown-item" href="#">-->
-<!--                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>-->
-<!--                                    Activity Log-->
-<!--                                </a>-->
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
+<!--                            </div>-->
                         </li>
 
                     </ul>
@@ -197,7 +216,19 @@
                         </div>
                     {% endfor %}
                     {% else %}
-                    {% block content %} {% endblock %}
+                        {% if not ekey %}
+                            {% block content %} {% endblock %}
+                        {% elif ekey == 'np' %}
+                             <div class="copyright text-center my-auto">
+                                <h2>Noqulaylik uchun uzur siz admin ruxsatini kutishingiz kerak</h2>
+                                <h3>Siz haqingizda adminlarga ruxsat berildi ular tez orada siz bn aloqaga chiqishadi</h3>
+                             </div>
+                        {% elif ekey == 'ng' %}
+                            <div class="copyright text-center my-auto">
+                                <h2>Uzur siz hech qaysi guruhda o'qimaysz</h2>
+                                <h3>Sizning ba'zi ruxsatlaringiz vaqtinchalik cheklab qo'yilgan</h3>
+                             </div>
+                        {% endif %}
                     {% endif %}
                 </div>
                 <!-- /.container-fluid -->
@@ -232,29 +263,191 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Chiqish so'rovi</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Ro'stdan ham ushbu profildan chiqmoqchimisz</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{% url 'sign-out-conf' conf=1 %}">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Yo'q</button>
+                    <a class="btn btn-primary" href="{% url 'sign-out-conf' conf=1 %}">Ha</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+
+<!-- Bootstrap core JavaScript-->
     <script src="{% static 'regis/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'regis/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{% static 'regis/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
+
+    <!--  external  -->
+    <script type="text/javascript" src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+
+    <script type="text/javascript" src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+    });
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+
+    //Date and time picker
+    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
+
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    $('.my-colorpicker2').on('colorpickerChange', function(event) {
+      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+    })
+
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    })
+
+  })
+  // BS-Stepper Init
+  document.addEventListener('DOMContentLoaded', function () {
+    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+  })
+
+  // DropzoneJS Demo Code Start
+  Dropzone.autoDiscover = false
+
+  // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+  var previewNode = document.querySelector("#template")
+  previewNode.id = ""
+  var previewTemplate = previewNode.parentNode.innerHTML
+  previewNode.parentNode.removeChild(previewNode)
+
+  var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+    url: "/target-url", // Set the url
+    thumbnailWidth: 80,
+    thumbnailHeight: 80,
+    parallelUploads: 20,
+    previewTemplate: previewTemplate,
+    autoQueue: false, // Make sure the files aren't queued until manually added
+    previewsContainer: "#previews", // Define the container to display the previews
+    clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+  })
+
+  myDropzone.on("addedfile", function(file) {
+    // Hookup the start button
+    file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
+  })
+
+  // Update the total progress bar
+  myDropzone.on("totaluploadprogress", function(progress) {
+    document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+  })
+
+  myDropzone.on("sending", function(file) {
+    // Show the total progress bar when upload starts
+    document.querySelector("#total-progress").style.opacity = "1"
+    // And disable the start button
+    file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+  })
+
+  // Hide the total progress bar when nothing's uploading anymore
+  myDropzone.on("queuecomplete", function(progress) {
+    document.querySelector("#total-progress").style.opacity = "0"
+  })
+
+  // Setup the buttons for all transfers
+  // The "add files" button doesn't need to be setup because the config
+  // `clickable` has already been specified.
+  document.querySelector("#actions .start").onclick = function() {
+    myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+  }
+  document.querySelector("#actions .cancel").onclick = function() {
+    myDropzone.removeAllFiles(true)
+  }
+  // DropzoneJS Demo Code End
+</script>
+
+
     <!-- Custom scripts for all pages-->
     <script src="{% static 'regis/js/sb-admin-2.min.js' %}"></script>
+
+
+
+
 
 </body>
 

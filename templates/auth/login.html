@@ -76,10 +76,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                            <form method="post" action="">
+                            <form method="post">
+                                {% csrf_token %}
                                 <div class="card" data-background="color" data-color="blue">
                                     <div class="card-header">
                                         <h3 class="card-title">Login</h3>
+                                        {% if error %}
+                                        <h4 style="background-color:red;">Login yoki Parol xato</h4>
+                                        {% endif %}
                                     </div>
                                     <div class="card-content">
                                         <div class="form-group">

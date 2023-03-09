@@ -20,9 +20,9 @@ class StatusChoice:
 
 
 class GenderChoice:
-    MALE = 1
-    FEMALE = 0
-    CHOICES = ((1, 'Erkak'), (FEMALE, 'Ayol'))
+    MALE = True
+    FEMALE = False
+    CHOICES = ((MALE, 'Erkak'), (FEMALE, 'Ayol'))
 
     @classmethod
     def getValue(self, index):

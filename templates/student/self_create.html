@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block title %}
+  {% if student.pk %}
+    Talaba ma'lumotlari
+  {% else %}
+    Yangi talaba qo‘shish
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary">
+
+
+            <form class="form" method="post" id="form-profession" enctype="multipart/form-data" novalidate>
+
+                {% csrf_token %}
+
+                <div class="card-body">
+                    <h2 class="form-group text-center">Assalomu Alaykum Xush Kelibsz</h2>
+                    <h3 class="form-group text-center">Iltimos O'zizgizga tegishli bo'lgan ma'lumotlarni kiritsangiz</h3>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.firstname %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.lastname %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.middlename %}
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.birthday %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.gender %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.pass_serial %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.region %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.district %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.nickname %}
+
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i> Saqlash
+                              </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

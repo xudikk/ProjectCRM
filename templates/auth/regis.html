@@ -76,10 +76,17 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                            <form method="post" action="#">
+                            <form method="post">
+                                {% csrf_token %}
+
                                 <div class="card" data-background="color" data-color="blue">
                                     <div class="card-header">
                                         <h3 class="card-title">Ro'yxatdan o'tish</h3>
+                                        {% if user_error %}
+                                        <h4 style="background-color:red;">Bu raqam allaqachon ro'yxatdan o'tgan</h4>
+                                        {% elif re_error %}
+                                        <h4 style="background-color:red;">O'rnatilgan parollar mos emas</h4>
+                                        {% endif %}
                                     </div>
                                     <div class="card-content">
                                         <div class="form-group">
@@ -100,7 +107,7 @@
                                         <div class="form-group">
                                             <label>Parolni boshqatdan kiriting</label>
                                             <input type="password" placeholder="xxxxxx" minlength="6"
-                                                   name="pass"
+                                                   name="re_pass"
                                                    title="Parolni eslab unutib qoling yubormang"
                                                    class="form-control input-no-border">
                                         </div>

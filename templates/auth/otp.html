@@ -57,6 +57,7 @@
                 </button>
                 <a class="navbar-brand" href="">Fintech Hub</a>
             </div>
+            {% if expired or time_out or cer %}
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -64,8 +65,14 @@
                             Ro'yxatdan o'tish
                         </a>
                     </li>
+                    <li>
+                       <a href="{% url 'sign-in' %}">
+                            Login
+                        </a>
+                    </li>
                 </ul>
             </div>
+            {% endif %}
         </div>
     </nav>
 
@@ -76,17 +83,28 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                            <form method="post" action="">
+                            <form method="post">
+                                {% csrf_token %}
+
                                 <div class="card" data-background="color" data-color="blue">
                                     <div class="card-header">
-                                        <h3 class="card-title">Login</h3>
+                                        <h3 class="card-title">Verifakatsiya</h3>
+                                        {% if expired %}
+                                        <h4 style="background-color:red;">Maxsus kod eskirgan!</h4>
+                                        {% elif time_out %}
+                                        <h4 style="background-color:red;">Maxsus kod uchun ajratilgan vaqt tugadi</h4>
+                                        {% elif cer %}
+                                        <h4 style="background-color:red;">Kod Xato Boshqatdan urunib ko'ring</h4>
+                                        {% endif %}
                                     </div>
                                     <div class="card-content">
                                         <div class="form-group">
-                                            <label>Maxsus kodni kiritng({{ request.otp }})</label>
+                                            <label>Maxsus kodni kiritng({{ request.session.otp }})</label>
                                             <input type="number" placeholder="XXXXXX"
+                                                   name="otp"
                                                    title="SMS Xabarlarini tekshirib ko'ring"
-                                                   class="form-control input-no-border">
+                                                   class="form-control input-no-border"
+                                            >
                                         </div>
                                     </div>
                                     <div class="card-footer text-center">
