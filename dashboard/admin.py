@@ -17,6 +17,7 @@ class GroupAdmin(admin.ModelAdmin):
 admin.site.register(Member)
 admin.site.register(Position)
 admin.site.register(Course)
+admin.site.register(Interested)
 admin.site.register(Group, GroupAdmin)
 
 

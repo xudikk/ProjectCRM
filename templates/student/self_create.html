@@ -23,9 +23,13 @@
                 {% csrf_token %}
 
                 <div class="card-body">
-                    <h2 class="form-group text-center">Assalomu Alaykum Xush Kelibsz</h2>
-                    <h3 class="form-group text-center">Iltimos O'zizgizga tegishli bo'lgan ma'lumotlarni kiritsangiz</h3>
-
+                    {% if member %}
+                        <h2 class="form-group text-center">Kerakli qismni o'zgartiring</h2>
+                        <h3 class="form-group text-center">Qolgan ma'lumotlarni o'zgartirish uchun admin bilan bog'laning</h3>
+                    {% else %}
+                        <h2 class="form-group text-center">Assalomu Alaykum Xush Kelibsz</h2>
+                        <h3 class="form-group text-center">Iltimos O'zizgizga tegishli bo'lgan ma'lumotlarni kiritsangiz</h3>
+                    {% endif %}
                     <div class="form-row">
 
                         <div class="form-group col-md-4">
@@ -66,6 +70,13 @@
                                 <i class="fas fa-check"></i> Saqlash
                               </button>
                         </div>
+                        <a href="{% url 'home' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-secondary">
+                                        <i class="fas fa-home"></i> Bosh menu
+                                  </button>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </form>

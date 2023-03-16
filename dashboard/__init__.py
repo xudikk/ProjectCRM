@@ -15,7 +15,7 @@ class PositionChoice:
 
 
 class MemberChoice:
-    STATUS_CHOICES = ((1, 'Faol emas'),
+    STATUS_CHOICES = ((1, 'Chiqib ketgan'),
                       (2, 'Faol'),
                       (3, 'Mavjud emas'),
                       (4, 'Yangi qo`shilmoqchi')

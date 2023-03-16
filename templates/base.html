@@ -46,15 +46,25 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Divider -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">FinTech Hub </div>
+                {% if member.permission == 0 %}
+                <div class="sidebar-brand-text mx-3">FinTech Hub (New) </div>
+                {% elif member.permission == 1 %}
+                <div class="sidebar-brand-text mx-3">FinTech Hub (Student) </div>
+                {% elif member.permission == 2 %}
+                <div class="sidebar-brand-text mx-3">FinTech Hub (Mentor) </div>
+                {% elif member.permission == 3 %}
+                <div class="sidebar-brand-text mx-3">FinTech Hub (Admin) </div>
+                {% else %}
+                <div class="sidebar-brand-text mx-3">FinTech Hub</div>
+                {% endif %}
             </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
@@ -90,7 +100,7 @@
             {% endif %}
 
 
-
+            {% if ekey != 'enroll' %}
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                      <a class="nav-link" href="" data-toggle="modal" data-target="#logoutModal">
@@ -106,7 +116,7 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
+            {% endif %}
         </ul>
         <!-- End of Sidebar -->
 
@@ -128,33 +138,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -165,28 +148,6 @@
                                 <img class="img-profile rounded-circle"
                                     src="{% static 'regis/img/undraw_profile.svg' %}">
                             </a>
-
-                            <!-- Dropdown - User Information -->
-<!--                            <div class="dropdown-menu dropdown-menu-right shadow animated&#45;&#45;grow-in"-->
-<!--                                aria-labelledby="userDropdown">-->
-<!--&lt;!&ndash;                                <a class="dropdown-item" href="#">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    Profile&ndash;&gt;-->
-<!--&lt;!&ndash;                                </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="dropdown-item" href="#">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    Settings&ndash;&gt;-->
-<!--&lt;!&ndash;                                </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="dropdown-item" href="#">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    Activity Log&ndash;&gt;-->
-<!--&lt;!&ndash;                                </a>&ndash;&gt;-->
-<!--                                <div class="dropdown-divider"></div>-->
-<!--                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">-->
-<!--                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>-->
-<!--                                    Logout-->
-<!--                                </a>-->
-<!--                            </div>-->
                         </li>
 
                     </ul>
@@ -196,39 +157,22 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    {% if home %}
-                    {% for i, j, k in models %}
-                     <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                <a href="{% url k %}">{{ i }}</a></div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ j }} item</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% else %}
-                        {% if not ekey %}
+
+                    {% if not ekey %}
                             {% block content %} {% endblock %}
-                        {% elif ekey == 'np' %}
-                             <div class="copyright text-center my-auto">
-                                <h2>Noqulaylik uchun uzur siz admin ruxsatini kutishingiz kerak</h2>
-                                <h3>Siz haqingizda adminlarga ruxsat berildi ular tez orada siz bn aloqaga chiqishadi</h3>
-                             </div>
-                        {% elif ekey == 'ng' %}
-                            <div class="copyright text-center my-auto">
-                                <h2>Uzur siz hech qaysi guruhda o'qimaysz</h2>
-                                <h3>Sizning ba'zi ruxsatlaringiz vaqtinchalik cheklab qo'yilgan</h3>
-                             </div>
-                        {% endif %}
+
+                    {% elif ekey == 'np' %}
+                         <div class="copyright text-center my-auto">
+                            <h2>Noqulaylik uchun uzur siz admin ruxsatini kutishingiz kerak</h2>
+                            <h3>Siz haqingizda adminlarga ruxsat berildi ular tez orada siz bn aloqaga chiqishadi</h3>
+                         </div>
+                    {% elif ekey == 'enroll' %}
+                        {% include 'enroll.html' %}
+                    {% elif ekey == 'ng' %}
+                        <div class="copyright text-center my-auto">
+                            <h2>Uzur siz hech qaysi guruhda o'qimaysz</h2>
+                            <h3>Sizning ba'zi ruxsatlaringiz vaqtinchalik cheklab qo'yilgan</h3>
+                         </div>
                     {% endif %}
                 </div>
                 <!-- /.container-fluid -->

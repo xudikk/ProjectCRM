@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block title %}Group | View{% endblock %}
+
+{% block content %}
+
+
+{% if position == 'one' %}
+<div class="card mb-4 border-left-success">
+    <div class="card-body">
+        <h4>Guruh: <mark><i>{{ group.name }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-success">
+    <div class="card-body">
+        <h4>Course: <mark><i>{{ group.course.name }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-success">
+    <div class="card-body">
+        <h4>Mentor: <mark><i>{{ group.course.mentor }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-success">
+    <div class="card-body">
+        <h4>Davomiyligi: <mark><i>{{ group.duration }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-success">
+    <div class="card-body">
+
+        <h4>Holati:  <mark>{% if group.status == 1 %}
+                        <i class="text-info">Boshlanmoqda</i>
+                        {% elif  group.status == 2 %}
+                        <i class="text-success">Davom Qilyabdi</i>
+                        {% elif  group.status == 3 %}
+                        <i class="text-warning">Guruh Yopilgan</i>
+                        {% else %}
+                        <i class="text-danger">Aniq Emas</i>
+                        {% endif %}
+        </mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-bottom-info">
+    <div class="card-body">
+        <a href="{% url 'admin-group' %}" class="btn btn-secondary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="text">Guruhlar listi</span>
+        </a>
+        <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-home"></i>
+            </span>
+            <span class="text">Bosh Menu</span>
+        </a>
+    </div>
+</div>
+
+
+
+{% else %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-success">To'lliq Guruhlar listi</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Name</th>
+                        <th>Course | Mentor</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in groups %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.course }}</td>
+                        {% if i.status == 1 %}
+                            <td><mark class="text-info">Boshlanmoqda</mark></td>
+                        {% elif i.status == 2 %}
+
+                            <td><mark class="text-success">Davom Qilyabdi</mark></td>
+                        {% elif i.status == 3 %}
+                            <td><mark class="text-warning">Guruh Yopilgan</mark></td>
+                        {% else %}
+                            <td><mark class="text-danger">Aniq Emas</mark></td>
+                        {% endif %}
+
+                        <td>
+                            <a href="#" title="Manage Group" class="btn btn-success btn-circle btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'admin-group-one' group_id=i.id %}" title="Group Info" class="btn btn-info btn-circle btn-sm">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </td>
+                    </tr>
+                   {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+
+{% endblock %}

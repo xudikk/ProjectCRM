@@ -122,6 +122,11 @@ class Group(models.Model):
     name = models.CharField(max_length=128)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, related_name="course")
     duration = models.CharField("Kurs Davomiyligi", max_length=128, default="6 oy")
+    status = models.SmallIntegerField(default=0, choices=[
+        (1, "Boshlanmoqda"),
+        (2, "Davom Qilyabdi"),
+        (3, "Guruh Yopilgan"),
+    ])
 
     def __str__(self):
         return f"Name : {self.name} | Course: {self.course} | Duration: {self.duration}"
@@ -143,9 +148,20 @@ class GroupStudent(models.Model):
         return f"{self.student}"
 
 
+class Interested(models.Model):
+    name = models.CharField(verbose_name="Ism Familiya", max_length=128, null=False, blank=False)
+    phone = models.CharField("Telefon raqam", max_length=20, null=False, blank=False)
+    telegram = models.CharField("Telegram username", null=True, blank=True, max_length=70)
+    extra_contact = models.CharField("Qo'shimcha Contact", null=True, blank=True, max_length=256)
+    additional = models.TextField("Qiziqishingiz haqida qisqacha", null=True, blank=True)
+    view = models.BooleanField(default=False)
+    contacted = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = "Yangi Yozilmoqchi"
+        verbose_name_plural = "Kursga Yozilmoqchi bo'lganlar"
 
-
-
+    def __str__(self):
+        return f"{self.name} | {self.phone} | {self.contacted} "
 
 

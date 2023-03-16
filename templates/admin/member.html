@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title  %} Member | View {% endblock %}
+
+{% block content %}
+{% if position == 'one' %}
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>To'lliq Ism: <mark><i>{{ member }} {% if member.middlename %} {{ member.middlename }} {% endif %}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Telefon raqam:  <mark><i>{{ member.phone_number }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Nickname:  <mark><i>{{ member.user.nickname }}</i></mark> <h6>#hozircha nickname uniqe emas</h6></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Tug'ulgan sana:  <mark><i>{{ member.birthday | date:'d-F, Y' }} Year</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Jinsi:  <mark><i> {% if  member.gender %} Erkak {% else %} Ayol {% endif %}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Saytga Qo'shilgan sana:  <mark><i> {{ member.join_date | date:'d-F, Y' }} Year</i></mark></h4>
+    </div>
+</div>
+
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Passport Ma'lumotlari:  <mark><i> {{ member.pass_serial }} </i></mark></h4>
+    </div>
+</div>
+
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Lavozim:  <mark><i> {{ member.position }} </i></mark></h4>
+    </div>
+</div>
+
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Holat:  <mark><i>{% if member.status == 1 %} Faol emas {% elif member.status == 2 %} Faol
+            {% elif member.status == 3 %} Mavjud emas {% else %} Aniq Emas {% endif %} </i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Status:  <mark><i>
+            {% if member.permission == 2 %}
+                Mentor | O'qituvchi
+            {% elif member.permission == 1 %}
+                O'quvchi
+            {% elif member.permission == 3 %}
+                Admin
+            {% elif member.permission == 0 %}
+                Yangi qo'shilgan
+            {% else %}
+                Aniq Emas
+            {% endif %}
+        </i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-info">
+    <div class="card-body">
+        <h4>Joylashuv:  <mark><i> {{ member.region }} {{ member.district }}</i></mark></h4>
+    </div>
+</div>
+
+
+<div class="card mb-4 border-bottom-info">
+    <div class="card-body">
+        <a href="{% url 'admin-member-edit' edit_id=member.id %}" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">Ruxsatlarini o'zgartirish</span>
+        </a>
+        <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-home"></i>
+            </span>
+            <span class="text">Bosh Menu</span>
+        </a>
+    </div>
+</div>
+{% elif position == edit %}
+    <div class="row">
+    <div class="col-md-12">
+        <div class="card card-info">
+
+
+            <form class="form" method="post" id="form-profession" enctype="multipart/form-data" novalidate>
+
+                {% csrf_token %}
+
+                <div class="card-body">
+                    <h2 class="form-group text-center">Siz Faqat shu ma'lumotlarni o'zgartira olasiz</h2>
+                    <h3 class="form-group text-center">Qolgan Ma'lumotlarni Faqatgina Super Admin O'zgartira oladi</h3>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.pass_serial %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.position %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.is_student %}
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'home' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-secondary">
+                                        <i class="fas fa-home"></i> Bosh menu
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% else %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        {% if pos == 'st' %}
+            <h6 class="m-0 font-weight-bold text-info">To'lliq Studentlar ro'yxati</h6>
+
+        {% else %}
+            <h6 class="m-0 font-weight-bold text-info">To'lliq O'qituvchilar ro'yxati</h6>
+
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            {% if error %}
+            <h5 class="m-0 font-weight-bold text-danger"> Bunaqa user topilmadi</h5>
+            {% endif %}
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Name</th>
+                        <th>Lavozimi</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in members %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i }}</td>
+                        <td>{{ i.position }}</td>
+                        {% if i.status == 1 %}
+                        <td class="text-secondary">Faol Emas</td>
+                        {% elif i.status == 2 %}
+
+                        <td>Faol</td>
+                        {% elif i.status == 3 %}
+                        <td>Mavjud emas</td>
+                        {% else %}
+                        <td>Aniq Emas</td>
+                        {% endif %}
+
+                        <td>
+                            <a href="{% url 'admin-member-edit' edit_id=i.id %}" title="Manage member" class="btn btn-success btn-circle btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'admin-member-one' _id=i.id %}" title="Member Info" class="btn btn-info btn-circle btn-sm">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </td>
+                    </tr>
+                   {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+{% endblock %}

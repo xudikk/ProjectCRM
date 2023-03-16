@@ -102,7 +102,6 @@ class StudentForm(forms.ModelForm):
 
     def save(self, commit=True):
         all_value = self.cleaned_data
-        print(type(all_value['gender']))
         self.instance.gender = True if all_value['gender'] == 'True' else False
         instance = super().save(commit=commit)
         return instance

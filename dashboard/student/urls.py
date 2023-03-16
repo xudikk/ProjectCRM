@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from ..views import new, st_profile
 
 urlpatterns = [
     path('change/', new, name="student-new"),
