@@ -71,6 +71,13 @@ class Member(models.Model):
                                  on_delete=models.SET_NULL)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        if self.permission == 2 or self.permission == 3:
+            self.is_student = False
+        else:
+            self.is_student = True
+        return super(Member, self).save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
 
@@ -111,7 +118,7 @@ class Course(models.Model):
                                )
 
     def __str__(self):
-        return f"{self.name} | Mentor: {self.mentor} "
+        return f"{self.name} | Mentor: {self.mentor}"
 
     class Meta:
         verbose_name = "course"
@@ -129,7 +136,7 @@ class Group(models.Model):
     ])
 
     def __str__(self):
-        return f"Name : {self.name} | Course: {self.course} | Duration: {self.duration}"
+        return f"Name : {self.name} | Course: {self.course} "
 
 
 class GroupStudent(models.Model):
@@ -154,8 +161,10 @@ class Interested(models.Model):
     telegram = models.CharField("Telegram username", null=True, blank=True, max_length=70)
     extra_contact = models.CharField("Qo'shimcha Contact", null=True, blank=True, max_length=256)
     additional = models.TextField("Qiziqishingiz haqida qisqacha", null=True, blank=True)
+    via = models.CharField(max_length=128, blank=True, null=True, default="Aniq emas")
     view = models.BooleanField(default=False)
     contacted = models.BooleanField(default=False)
+    who_contacted = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         verbose_name = "Yangi Yozilmoqchi"
@@ -163,5 +172,20 @@ class Interested(models.Model):
 
     def __str__(self):
         return f"{self.name} | {self.phone} | {self.contacted} "
+
+
+# class ReqCHangePass(models.Model):
+#     fullname = models.CharField("Ism Familiya", max_length=128)
+#     phone = models.CharField(max_length=20)
+#     group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True,
+#                               limit_choices_to={"status": 2})
+#     user = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
+#     changed = models.BooleanField(default=False)
+#     who_helped = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True,
+#                                    limit_choices_to={'permission': 3})
+#
+
+
+
 
 

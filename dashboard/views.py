@@ -16,7 +16,7 @@ def index(request):
     if not mb:
         return redirect('student-new')
     ctx['member'] = mb
-
+    request.session['user'] = mb.id
     if not mb.position:
         ctx.update({
             "ekey": "np"  # error key - need position

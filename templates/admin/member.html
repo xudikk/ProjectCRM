@@ -104,7 +104,7 @@
     </div>
 </div>
 {% elif position == edit %}
-    <div class="row">
+<div class="row">
     <div class="col-md-12">
         <div class="card card-info">
 
@@ -119,7 +119,7 @@
                     <div class="form-row">
 
                         <div class="form-group col-md-4">
-                            {% bootstrap_field form.pass_serial %}
+                            {% bootstrap_field form.permission %}
                         </div>
 
                         <div class="form-group col-md-4">
@@ -127,7 +127,7 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                            {% bootstrap_field form.is_student %}
+                            {% bootstrap_field form.status %}
                         </div>
 
                     </div>
@@ -137,9 +137,26 @@
                                 <i class="fas fa-check"></i>O'zgarishlarni Saqlash
                               </button>
                         </div>
-                        <a href="{% url 'home' %}">
+                        {% if pos == 'st' %}
+                        <a href="{% url 'admin-student' %}">
                             <div class="card-action ml-1 right-align">
                                   <button type="button" class="btn btn-block btn-secondary">
+                                        <i class="fas fa-arrow-left"></i> Back to list
+                                  </button>
+                            </div>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'admin-mentor' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-secondary">
+                                        <i class="fas fa-arrow-left"></i> Back to list
+                                  </button>
+                            </div>
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'home' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
                                         <i class="fas fa-home"></i> Bosh menu
                                   </button>
                             </div>
@@ -180,6 +197,8 @@
                 </thead>
                 <tbody>
                     {% for i in members %}
+                    {% if i.id != request.session.user %}
+
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ i }}</td>
@@ -204,6 +223,7 @@
                             </a>
                         </td>
                     </tr>
+                    {% endif %}
                    {% endfor %}
 
                 </tbody>

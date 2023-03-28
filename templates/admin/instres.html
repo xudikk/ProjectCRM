@@ -25,12 +25,22 @@
 
 <div class="card mb-4 border-left-warning">
     <div class="card-body">
-        <h4>Telegram Contact: <mark><i>{{ inst.extra_contact }}</i></mark></h4>
+        <h4>Qo'shimcha Contact: <mark><i>{{ inst.extra_contact }}</i></mark></h4>
     </div>
 </div>
 <div class="card mb-4 border-left-warning">
     <div class="card-body">
-        <h4>Telegram Contact: <mark><i>{{ inst.additional }}</i></mark></h4>
+        <h4>Qo'shimcha ma'lumot: <mark><i>{{ inst.additional }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Aloqaga chiqilgan manba: <mark><i>{{ inst.via }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Aloqaga chiqqan admin: <mark><i>{{ inst.who_contacted }}</i></mark></h4>
     </div>
 </div>
 <div class="card mb-4 border-left-warning">
@@ -81,6 +91,7 @@
                     <tr>
                         <th>№</th>
                         <th>Name</th>
+                        <th>Via</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -90,6 +101,7 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ i.name }}</td>
+                        <td>{{ i.via }}</td>
                         <td>{% if i.contacted %} <mark class="text-warning">Bog'lanilgan </mark> {% else %} <mark class="text-danger">Bog'lanilmagan</mark> {% endif %}</td>
                         <td>
                             {% if not i.contacted %}

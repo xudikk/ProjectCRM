@@ -20,7 +20,6 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'regis/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
-
     <!--  external  -->
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}" />
@@ -69,7 +68,7 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-home"></i>
                     <span>Bosh Menu</span></a>
             </li>
 
@@ -82,21 +81,9 @@
             </div>
 
             {% if not ekey %}
-            <!-- Nav Item - Pages Collapse Menu -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Komponentalar</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Yordamchi Menu</h6>
-                        <a class="collapse-item" href="">Category</a>
-                    </div>
-                </div>
-            </li>
+                {% if member.permission == 3 %}
+                    {% include 'partials/manuadmin.html' %}
+                {% endif %}
             {% endif %}
 
 

@@ -60,7 +60,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <a href="{% url 'admin-mentor' %}">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                 Mentorlar</div>
                             </a>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">Active <mark>{{ cnts.tcnt }}</mark> ta </div>
@@ -80,11 +80,11 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <a href="{% url 'admin-interested' %}">
+                            <a href="{% url 'admin-course' %}">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Yangi Yozilganlar</div>
+                                    Kurslar</div>
                             </a>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Ko'rilmagan <mark>{{ cnts.icnt }}</mark> ta </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">Hammasi <mark>{{ cnts.ccnt }}</mark> ta </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -101,27 +101,46 @@
 
             <!-- Default Card Example -->
             <div class="card mb-4">
-                <div class="card-header">
-                    Default Card Example
-                </div>
+                {% if new_joined %}
+                    <div class="card-header m-0 font-weight-bold bg-warning">
+                        Yangi qo'shilganlar
+                    </div>
+                {% else %}
+                    <div class="card-header m-0 font-weight-bold">
+                        Yangi qo'shilganlar
+                    </div>
+                {% endif %}
                 <div class="card-body">
-                    This card uses Bootstrap's default styling with no utility classes added. Global
-                    styles are the only things modifying the look and feel of this default card example.
+                    {% if new_joined %}
+                        {% for i in new_joined %}
+                            {% if forloop.counter < 3 %}
+                                <mark>{{ i }}</mark>
+                            {% endif %}
+                        {% endfor %}
+                        {% if cnt_joined != 0 %}
+                             va yana <mark> {{ cnt_joined }} </mark>ta yangi qo'shilgan a'zolar ruxsat kutishyabdi
+                        {% else %}
+                            Sizlarning saytdan foydalanishiga ruxsat berishingizni kutyabdilar
+                        {% endif %}
+
+                    {% else %}
+                        <i class="text-success">Hozircha hech qanday saytga yangi qo'shilgan a'zolar yo'q</i>
+                    {% endif %}
+
                 </div>
             </div>
 
             <!-- Basic Card Example -->
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Basic Card Example</h6>
+                <div class="card-header py-3  bg-info">
+                    <h6 class="m-0 font-weight-bold">Davomat</h6>
                 </div>
                 <div class="card-body">
-                    The styling for this basic card example is created by using default Bootstrap
-                    utility classes. By using utility classes, the style of the card component can be
-                    easily modified with no need for any custom CSS!
+                    Guruhlarning kunlik davomat tizimini tez va osonroq boshqarib turish uchun
+                    tezkor panel
+
                 </div>
             </div>
-
         </div>
 
         <div class="col-lg-6">
@@ -130,14 +149,14 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
+                    class="card-header py-3 d-flex flex-row align-items-center bg-warning justify-content-between">
+                    <h6 class="m-0 font-weight-bold">Yangi Yozilgan odamlar</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    Dropdown menus can be placed in the card header in order to extend the functionality
-                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
-                    icon in the card header can be clicked on in order to toggle a dropdown menu.
+                    Yangi qiziquvchi. Turli referal idlar orqali kurslarga yozilgan qiziquvchilarni boshqarib turish
+                    uchun ular bilan tezkor bog'lanish uchun panel
+
                 </div>
             </div>
 
@@ -146,7 +165,7 @@
                 <!-- Card Header - Accordion -->
                 <a class="d-block card-header py-3"
                     role="button" aria-expanded="true" >
-                    <h6 class="m-0 font-weight-bold text-primary">Collapsable Card Example</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Parollar Boshqaruvi</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseCardExample">

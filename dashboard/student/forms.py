@@ -3,7 +3,7 @@ from django.forms import DateInput, TimeInput
 
 from base import GenderChoice
 from dashboard.models.extra import Position, Member
-from geo.models import District
+from geo.models import District, Region
 
 
 class DatePicker(DateInput):
@@ -40,7 +40,6 @@ class EmployeeForm(forms.ModelForm):
         if self.instance.pk is None:
             return District.objects.all()
 
-        print(self.instance.region_id)
         return District.objects.filter(region_id=self.instance.region_id)
 
     def save(self, commit=True):
@@ -89,10 +88,7 @@ class StudentForm(forms.ModelForm):
         self.fields['nickname'].initial = self.get_nick()
 
     def district_queryset(self):
-        if self.instance.pk is None:
-            return District.objects.all()
-
-        return District.objects.filter(region_id=self.instance.region_id)
+        return District.objects.all()
 
     def get_nick(self):
         if self.instance.pk is None:
