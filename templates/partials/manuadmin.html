@@ -1,0 +1,41 @@
+
+
+
+<!-- Nav Item - Pages Collapse Menu -->
+
+<li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Yordamchi Menu</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Komponentalar</h6>
+            <a class="collapse-item text-center" href="{% url 'admin-group' %}">Guruhlar</a>
+            <a class="collapse-item text-center" href="{% url 'admin-student' %}">O'quvchilar</a>
+            <a class="collapse-item text-center" href="{% url 'admin-mentor' %}">Mentorlar</a>
+            <a class="collapse-item text-center" href="">Kurslar</a>
+        </div>
+    </div>
+</li>
+<!-- Nav Item - Pages Collapse Menu -->
+
+<li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseq"
+        aria-expanded="true" aria-controls="collapseq">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Nazorat Menu</span>
+    </a>
+    <div id="collapseq" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Komponentalar</h6>
+            <a class="collapse-item text-center" href="{% url 'admin-change-pass' %}">Parollar boshqaruvi</a>
+            <a class="collapse-item text-center" href="">To'lovlar</a>
+            <a class="collapse-item text-center" href="">Yangi qo'shilganlar</a>
+            <a class="collapse-item text-center" href="">Davomat</a>
+            <a class="collapse-item text-center" href="{% url 'admin-interested' %}">Yozilganlar</a>
+
+        </div>
+    </div>
+</li>
