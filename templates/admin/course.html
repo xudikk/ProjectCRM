@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}Course | View {% endblock %}
+{% load bootstrap4 %}
 {% block content %}
 
 
@@ -83,6 +84,12 @@
             </span>
             <span class="text">Listlarga qaytish</span>
         </a>
+        <a class="btn btn-danger btn-icon-split" href="" data-toggle="modal" data-target="#delete_{{ root.id }}">
+            <span class="icon text-white-50">
+                <i class="fas fa-trash"></i>
+            </span>
+            <span class="text">Delete</span>
+        </a>
         <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-home"></i>
@@ -92,61 +99,131 @@
     </div>
 </div>
 
-{% else %}
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-warning">Kurslar Ro'yxati</h6>
 
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            {% if error %}
-            <h5 class="m-0 font-weight-bold text-danger">Qandaydir Xatolik</h5>
-            {% endif %}
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Name</th>
-                        <th>Mentor</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in courses %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ i.name }}</td>
-                        <td>{{ i.mentor }}</td>
-                        <td>
-                            <a href="{% url 'admin-course-edit' edit_id=i.id %}" title="Edit Course" class="btn btn-warning btn-circle btn-sm">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="{% url 'admin-course-one' pk=i.id %}" title="Member Info" class="btn btn-info btn-circle btn-sm">
-                                <i class="fas fa-info-circle"></i>
-                            </a>
-                        </td>
-                    </tr>
-                   {% endfor %}
-
-                </tbody>
-
-            </table>
-             <a href="#" class="btn btn-warning bg-gradient-warning btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                </span>
-                <span class="text">Yangi Kurs Qo'shish</span>
-            </a>
-             <a href="{% url 'home' %}" class="btn btn-secondary bg-gradient-dark btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-home"></i>
-                </span>
-                <span class="text">Bosh Menu</span>
-            </a>
+<div class="modal fade" id="delete_{{ root.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info ">
+                <h5 class="modal-title" id="exampleModalLabel">O'chirishni tasdiqlash</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-plus grade-30"></i></span>
+                </button>
+            </div>
+            <div class="modal-body"> rostdan ham {{ root }} ni o'chirmoqchimisz? </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="{% url 'admin-course-delete' del_id=root.id %}">yes</a>
+            </div>
         </div>
     </div>
 </div>
 
+
+{% elif position == 'edit' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-info">
+                <form class="form" method="post" id="form-profession" enctype="multipart/form-data" novalidate>
+
+                    {% csrf_token %}
+
+                    <div class="card-body">
+                        <h2 class="form-group text-center">Yangi Guruh qo'shish bo'limi</h2>
+                        <h3 class="form-group text-center">Guruh qo'shish uchun barcha ma'lumotlarni to'ldiring</h3>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                {% bootstrap_field form.name %}
+                            </div>
+                            <div class="form-group col-md-4">
+                                {% bootstrap_field form.mentor %}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="card-action right-align">
+                                  <button type="submit" class="btn btn-block btn-success">
+                                    <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                                  </button>
+                            </div>
+                            <a href="{% url 'admin-course' %}">
+                                <div class="card-action ml-1 right-align">
+                                      <button type="button" class="btn btn-block btn-secondary">
+                                            <i class="fas fa-arrow-left"></i> Back to list
+                                      </button>
+                                </div>
+                            </a>
+                            <a href="{% url 'home' %}">
+                                <div class="card-action ml-1 right-align">
+                                      <button type="button" class="btn btn-block btn-info">
+                                            <i class="fas fa-home"></i> Bosh menu
+                                      </button>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% else %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-warning">Kurslar Ro'yxati</h6>
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% if error %}
+                <h5 class="m-0 font-weight-bold text-danger">Qandaydir Xatolik</h5>
+                {% endif %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Name</th>
+                            <th>Mentor</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in courses %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.mentor }}</td>
+                            <td>
+                                <a href="{% url 'admin-course-edit' edit_id=i.id %}" title="Edit Course" class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'admin-course-one' pk=i.id %}" title="Member Info" class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+                       {% endfor %}
+
+                    </tbody>
+
+                </table>
+                 <a href="{% url 'admin-course-edit' edit_id=0 %}" class="btn btn-warning bg-gradient-warning btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Yangi Kurs Qo'shish</span>
+                </a>
+                 <a href="{% url 'home' %}" class="btn btn-secondary bg-gradient-dark btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="text">Bosh Menu</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
 {% endif %}
+
 {% endblock %}

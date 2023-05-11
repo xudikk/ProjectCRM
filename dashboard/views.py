@@ -80,18 +80,19 @@ def st_profile(requests):
 
 def enroll(requests):
     form = EnrollForm(requests.POST or None)
-    if form.is_valid():
-        form.save()
-        ctx = {
-            "added": True,
-            'ekey': 'enroll',
-            "form": form
-        }
-        return render(requests, "base.html", ctx)
-
     ctx = {
         'ekey': 'enroll',
         "form": form
     }
+    if form.is_valid():
+        via = requests.GET.get('via', '')
+        en = form.save()
+        if via:
+            en.via = via
+            en.save()
+        ctx.update({
+            "added": True,
+        })
+        return render(requests, "base.html", ctx)
 
     return render(requests, "base.html", ctx)

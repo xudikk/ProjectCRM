@@ -20,7 +20,7 @@ def sign_in(requests):
         "rdbg": rdbg[random.randint(0, len(rdbg) - 1)]
     }
     if requests.POST:
-        phone = requests.POST.get('phone')
+        phone = requests.POST.get('phone', '').replace(" ", "")
         password = requests.POST.get('pass')
 
         user = User.objects.filter(phone=phone).first()
@@ -67,7 +67,7 @@ def sign_up(requests):
     except:
         pass
     if requests.POST:
-        phone = requests.POST.get('phone')
+        phone = requests.POST.get('phone', '').replace(" ", "")
         password = requests.POST.get('pass')
         re_password = requests.POST.get('re_pass')
 

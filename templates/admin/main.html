@@ -95,91 +95,12 @@
         </div>
     </div>
 
-    <div class="row">
-
-        <div class="col-lg-6">
-
-            <!-- Default Card Example -->
-            <div class="card mb-4">
-                {% if new_joined %}
-                    <div class="card-header m-0 font-weight-bold bg-warning">
-                        Yangi qo'shilganlar
-                    </div>
-                {% else %}
-                    <div class="card-header m-0 font-weight-bold">
-                        Yangi qo'shilganlar
-                    </div>
-                {% endif %}
-                <div class="card-body">
-                    {% if new_joined %}
-                        {% for i in new_joined %}
-                            {% if forloop.counter < 3 %}
-                                <mark>{{ i }}</mark>
-                            {% endif %}
-                        {% endfor %}
-                        {% if cnt_joined != 0 %}
-                             va yana <mark> {{ cnt_joined }} </mark>ta yangi qo'shilgan a'zolar ruxsat kutishyabdi
-                        {% else %}
-                            Sizlarning saytdan foydalanishiga ruxsat berishingizni kutyabdilar
-                        {% endif %}
-
-                    {% else %}
-                        <i class="text-success">Hozircha hech qanday saytga yangi qo'shilgan a'zolar yo'q</i>
-                    {% endif %}
-
-                </div>
-            </div>
-
-            <!-- Basic Card Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3  bg-info">
-                    <h6 class="m-0 font-weight-bold">Davomat</h6>
-                </div>
-                <div class="card-body">
-                    Guruhlarning kunlik davomat tizimini tez va osonroq boshqarib turish uchun
-                    tezkor panel
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-
-            <!-- Dropdown Card Example -->
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center bg-warning justify-content-between">
-                    <h6 class="m-0 font-weight-bold">Yangi Yozilgan odamlar</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    Yangi qiziquvchi. Turli referal idlar orqali kurslarga yozilgan qiziquvchilarni boshqarib turish
-                    uchun ular bilan tezkor bog'lanish uchun panel
-
-                </div>
-            </div>
-
-            <!-- Collapsable Card Example -->
-            <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <a class="d-block card-header py-3"
-                    role="button" aria-expanded="true" >
-                    <h6 class="m-0 font-weight-bold text-primary">Parollar Boshqaruvi</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardExample">
-                    <div class="card-body">
-                        This is a collapsable card example using Bootstrap's built in collapse
-                        functionality. <strong>Click on the card header</strong> to see the card body
-                        collapse and expand!
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+        <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Yangiliklar</h1>
     </div>
+
+    {% include 'ads.html' %}
 
 </div>
 

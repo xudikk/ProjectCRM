@@ -17,12 +17,15 @@ urlpatterns = [
     path("course/", manage_course, name="admin-course"),
     path("course/one/<int:pk>/", manage_course, name="admin-course-one"),
     path("course/<int:edit_id>/", manage_course, name="admin-course-edit"),
+    path("course/del/<int:del_id>/", manage_course, name="admin-course-delete"),
 
     # member
     path("mentor/", manage_mentor, name="admin-mentor"),
     path("one/<int:_id>/", manage_mentor, name="admin-member-one"),
     path("edit/<int:edit_id>/", manage_mentor, name="admin-member-edit"),
+
     path("student/", manege_student, name="admin-student"),
+    path("student/<int:permission>/", manege_student, name="admin-new-members"),
 
     # interesting
     path("ins/", interested, name="admin-interested"),

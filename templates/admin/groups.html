@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Group | View{% endblock %}
 
-{% block content %}
 {% load bootstrap4 %}
+{% block content %}
+
 
 {% if position == 'one' %}
     <div class="card mb-4 border-left-success">
@@ -132,7 +133,7 @@
                 </span>
                 <span class="text">Guruhga o'quvchi qo'shish</span>
             </a>
-            <a href="{% url 'admin-group-edit' _id=group.id %}" class="btn btn-primary btn-icon-split">
+            <a href="{% url 'admin-group-add-student' group_id=group.id status=201 %}" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-edit"></i>
                 </span>
@@ -237,7 +238,7 @@
                             {% endif %}
 
                             <td>
-                                <a href="#" title="Manage Group" class="btn btn-success btn-circle btn-sm">
+                                <a href="{% url 'admin-group-add-student' group_id=i.id status=201 %}" title="Manage Group" class="btn btn-success btn-circle btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="{% url 'admin-group-one' group_id=i.id %}" title="Group Info" class="btn btn-info btn-circle btn-sm">
@@ -252,6 +253,64 @@
             </div>
         </div>
     </div>
+
+{% elif position == 'add' %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-info">
+
+
+            <form class="form" method="post" id="form-profession" enctype="multipart/form-data" novalidate>
+
+                {% csrf_token %}
+
+                <div class="card-body">
+                    <h2 class="form-group text-center">Yangi Guruh qo'shish bo'limi</h2>
+                    <h3 class="form-group text-center">Guruh qo'shish uchun barcha ma'lumotlarni to'ldiring</h3>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.name %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.course %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.duration %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.status %}
+                        </div>
+
+
+                    </div>
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'admin-group' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-secondary">
+                                        <i class="fas fa-arrow-left"></i> Back to list
+                                  </button>
+                            </div>
+                        </a>
+                        <a href="{% url 'home' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Bosh menu
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% else %}
 
@@ -342,6 +401,23 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-6 mb-4">
+                <a href="{% url 'admin-group-add-student' group_id=0 status=201 %}" class="btn btn-success btn-icon-split" >
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Yangi guruh qo'shish</span>
+                </a>
+                <a href="{% url 'home' %}"  class="btn btn-info btn-icon-split" >
+                   <span class="icon text-white-50">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="text">Bosh Menu</span>
+               </a>
+            </div>
+
         </div>
     </div>
 

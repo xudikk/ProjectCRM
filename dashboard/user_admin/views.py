@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from dashboard.models.extra import Member, Group, Interested, Course, GroupStudent
-from dashboard.user_admin.forms import MemberChangeForm, PasswordForm, CourseForm, GrStForm
+from dashboard.user_admin.forms import MemberChangeForm, PasswordForm, CourseForm, GrStForm, GroupForm
 from dashboard.user_admin.services import cnts, gcnt
 from hashlib import sha1, sha256
 
@@ -31,7 +31,20 @@ def manage_group(requests, group_id=None, status=None, student_id=None, _id=None
     if not member or member.permission != 3:
         return redirect('home')
 
-    if group_id:
+    if status == 201:  # status -> HTTP RESPONSE statuses 201-add, 99-add student, 1,2,3-group statuses
+        group = Group.objects.filter(id=group_id).first()
+        form = GroupForm(requests.POST or None, instance=group)
+        ctx = {"group": group, "member": member, "form": form, "position": "add"}
+        if form.is_valid():
+            form.save()
+            return redirect('admin-group-one', group_id=group_id)
+        else:
+            for i, j in form.errors.items():
+                ctx['error'] = i
+                break
+        return render(requests, 'admin/groups.html', ctx)
+
+    elif group_id:
         group = Group.objects.filter(id=group_id).first()
         if group:
             if student_id:
@@ -49,15 +62,16 @@ def manage_group(requests, group_id=None, status=None, student_id=None, _id=None
                         break
                 return render(requests, 'admin/groups.html', ctx)
 
-            queryset = GroupStudent.objects.select_related('group').filter(group=group)
-            members = [x.student for x in queryset]
-            ctx = {
-                'group': group,
-                "position": "one",
-                "member": member,
-                'members': members
-            }
-            return render(requests, 'admin/groups.html', ctx)
+        queryset = GroupStudent.objects.select_related('group').filter(group=group)
+        members = [x.student for x in queryset]
+        ctx = {
+            'group': group,
+            "position": "one",
+            "member": member,
+            'members': members
+        }
+        return render(requests, 'admin/groups.html', ctx)
+
 
     elif status:
         groups = Group.objects.filter(status=status).order_by('-pk')
@@ -77,11 +91,22 @@ def manage_group(requests, group_id=None, status=None, student_id=None, _id=None
 
 
 @login_required(login_url='sign-in')
-def manege_student(requests):
+def manege_student(requests, permission=None):
     member = Member.objects.filter(user=requests.user).first()
     if not member or member.permission != 3:
         return redirect('home')
+    if permission == 0:
+        members = Member.objects.filter(permission=0).order_by('-pk')
+        ctx = {
+            'members': members,
+            'position': 'list',
+            'pos': 'news',
+            "member": member
+
+        }
+        return render(requests, 'admin/member.html', ctx)
     members = Member.objects.filter(is_student=True).order_by('-pk')
+
     ctx = {
         'members': members,
         'position': 'list',
@@ -200,19 +225,34 @@ def manage_mentor(requests, _id=None, edit_id=None):
 
 
 @login_required(login_url='sign-in')
-def manage_course(requests, pk=None, edit_id=None):
+def manage_course(requests, pk=None, edit_id=None, del_id=None):
     member = Member.objects.filter(user=requests.user).first()
     if not member or member.permission != 3:
         return redirect('home')
 
-    form = CourseForm(requests.POST or None)
-    if form.is_valid():
-        form.save()
-
     ctx = {
-        "member": member,
-        "form": form,
+        "member": member
     }
+    if del_id:
+        course = Course.objects.filter(id=del_id).first()
+        if not course:
+            return redirect('admin-course')
+        course.delete()
+        return redirect('admin-course')
+
+    if edit_id or edit_id == 0:
+        course = Course.objects.filter(id=edit_id).first()
+        form = CourseForm(requests.POST or None, instance=course)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-course')
+
+        ctx = {
+            "member": member,
+            "form": form,
+            "position": 'edit'
+        }
+        return render(requests, 'admin/course.html', ctx)
     if pk:
         course = Course.objects.filter(pk=pk).first()
         if not course:
@@ -226,8 +266,6 @@ def manage_course(requests, pk=None, edit_id=None):
             "groups": groups
         })
 
-    elif edit_id:
-        ctx['position'] = 'edit'
     else:
         ctx['position'] = 'list'
         ctx['courses'] = Course.objects.all()

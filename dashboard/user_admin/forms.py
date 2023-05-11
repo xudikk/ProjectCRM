@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models.expressions import RawSQL
 
 from dashboard.models.extra import Member, Course, Group, GroupStudent
 from dashboard.student.forms import DatePicker
@@ -91,7 +92,8 @@ class CourseForm(forms.ModelForm):
         model = Course
         fields = '__all__'
 
-        labels = {
-            "name": "Kurs Nomi",
-            "mentor": "Kursi o'tuvchi Mentor",
-        }
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
